@@ -11,6 +11,30 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Matiere {
+   public int getIdMatiere() {
+		return idMatiere;
+	}
+
+	public void setIdMatiere(int idMatiere) {
+		this.idMatiere = idMatiere;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    private int idMatiere;

@@ -30,16 +30,16 @@ public class Compte {
     private boolean afficheEmail;
    
     @ManyToOne
-    @JoinColumn(name="role_id")
+    @JoinColumn(name="idRole")
     public Role role;
     
     @OneToMany(mappedBy="compte", cascade=CascadeType.ALL)
     public Collection<Notification> notifications;
     
-    @OneToMany(mappedBy="compte", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="expediteur", cascade=CascadeType.ALL)
     public Collection<Message> messagesEnvoyes;
     
-    @OneToMany(mappedBy="compte", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="destinataire", cascade=CascadeType.ALL)
     public Collection<Message> messagesReçus;
   
     
@@ -48,7 +48,7 @@ public class Compte {
 	   		name="Compte_Conversation", 
 				joinColumns=@JoinColumn(name="idCompte"), 
 				inverseJoinColumns=@JoinColumn(name="idConversation"))
-    public Collection<Conversation> conversationsCrees;
+    public java.util.Collection<Conversation> conversationReçues;
     
     
     @OneToMany(mappedBy="compte", cascade=CascadeType.ALL)
@@ -58,9 +58,8 @@ public class Compte {
     @JoinColumn(name="idUtilisateur")
     public Utilisateur proprietaire;
 
-    @OneToMany(mappedBy="compte", cascade=CascadeType.ALL)
-    public java.util.Collection<Conversation> conversationReçues;
-   
+    @OneToMany(mappedBy="createurConversation", cascade=CascadeType.ALL)
+    public Collection<Conversation> conversationsCrees;
    
    /** @pdGenerated default parent getter */
    public Role getRole() {

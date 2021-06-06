@@ -14,7 +14,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.ensah.core.services.CustomAuthentificationService;
+import com.ensah.core.dao.Impl.CustomAuthentificationService;
 
 @Configuration // Car cette classe contient des beans (annotées par @bean) qui seront crée
 				// automatiquement par Spring

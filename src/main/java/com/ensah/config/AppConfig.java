@@ -37,6 +37,7 @@ import com.ensah.core.bo.Filiere;
 import com.ensah.core.bo.Inscription;
 import com.ensah.core.bo.JournalisationEvenements;
 import com.ensah.core.bo.Matiere;
+import com.ensah.core.bo.Module;
 import com.ensah.core.bo.Message;
 import com.ensah.core.bo.Niveau;
 import com.ensah.core.bo.Notification;

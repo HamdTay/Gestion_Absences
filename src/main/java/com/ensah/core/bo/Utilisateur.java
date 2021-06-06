@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -23,11 +26,18 @@ public class Utilisateur {
    private String nom;
 
    private String prenom;
-
+   
+//   @NotBlank(message = "This field is required")
+//   @Pattern(regexp = "^[A-Z]{2}[0-9]{8}", message = "The National ID must be 2 upper letters followed by  8 digits")
    private String cin;
+   
+//   @Email(message = "Enter a valid email")
+//   @NotBlank(message = "This field is required")
    @Column(unique=true)
    private String email;
 
+//   @NotBlank(message = "This field is required")
+//   @Pattern(regexp = "^[0-9]{9}", message = "A phone number must be 9 digits long.")
    private String telephone;
 
    private String nomArabe;
@@ -36,7 +46,7 @@ public class Utilisateur {
 
    private String photo;
 
-   @OneToMany(mappedBy="utilisateur", cascade=CascadeType.ALL)
+   @OneToMany(mappedBy="proprietaire", cascade=CascadeType.ALL, targetEntity = Compte.class)
    public java.util.Collection<Compte> comptes;
    
    

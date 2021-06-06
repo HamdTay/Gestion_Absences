@@ -21,7 +21,7 @@ public class Module {
 
    private String code;
    
-   @OneToMany(mappedBy="module", cascade=CascadeType.ALL)
+   @OneToMany(mappedBy="module", cascade=CascadeType.ALL, targetEntity = Matiere.class)
    public java.util.Collection<Matiere> matieres;
 
    @ManyToOne
@@ -91,28 +91,28 @@ public class Module {
          }
       }
    }
-   /** @pdGenerated default parent getter */
-   public Niveau getNiveau() {
-      return niveau;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newNiveau */
-   public void setNiveau(Niveau newNiveau) {
-      if (this.niveau == null || !this.niveau.equals(newNiveau))
-      {
-         if (this.niveau != null)
-         {
-            Niveau oldNiveau = this.niveau;
-            this.niveau = null;
-            oldNiveau.removeModules(this);
-         }
-         if (newNiveau != null)
-         {
-            this.niveau = newNiveau;
-            this.niveau.addModules(this);
-         }
-      }
-   }
+//   /** @pdGenerated default parent getter */
+//   public Niveau getNiveau() {
+//      return niveau;
+//   }
+//   
+//   /** @pdGenerated default parent setter
+//     * @param newNiveau */
+//   public void setNiveau(Niveau newNiveau) {
+//      if (this.niveau == null || !this.niveau.equals(newNiveau))
+//      {
+//         if (this.niveau != null)
+//         {
+//            Niveau oldNiveau = this.niveau;
+//            this.niveau = null;
+//            oldNiveau.removeModules(this);
+//         }
+//         if (newNiveau != null)
+//         {
+//            this.niveau = newNiveau;
+//            this.niveau.addModules(this);
+//         }
+//      }
+//   }
 
 }

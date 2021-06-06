@@ -25,11 +25,11 @@ public class Message {
    public Conversation conversation;
    
    @ManyToOne
-   @JoinColumn(name="idCompte")
+   @JoinColumn(name="idExpediteur")
    public Compte expediteur;
    
    @ManyToOne
-   @JoinColumn(name="Com_idCompte")
+   @JoinColumn(name="idDestinataire")
    public Compte destinataire;
    
    
