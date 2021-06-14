@@ -13,133 +13,74 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Inscription {
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY) 
-   private int idInscription;
 
-   private int annee;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idInscription;
 
-   private int etat;
-   
-   @ManyToOne
-   @JoinColumn(name="idNiveau")
-   public Niveau niveau;
-  
-   @ManyToOne
-   @JoinColumn(name="idEtudiant")
-   public Etudiant etudiant;
+	private int annee;
 
-   @OneToMany(mappedBy="inscription", cascade=CascadeType.ALL, targetEntity = Absence.class)
-   public java.util.Collection<Absence> absences;
-   
-   
-   /** @pdGenerated default parent getter */
-   public Niveau getNiveau() {
-      return niveau;
-   }
-   
-//   /** @pdGenerated default parent setter
-//     * @param newNiveau */
-//   public void setInscriptions(Niveau newNiveau) {
-//      if (this.inscriptions == null || !this.inscriptions.equals(newNiveau))
-//      {
-//         if (this.inscriptions != null)
-//         {
-//            Niveau oldNiveau = this.inscriptions;
-//            this.inscriptions = null;
-//            oldNiveau.removeNiveau(this);
-//         }
-//         if (newNiveau != null)
-//         {
-//            this.inscriptions = newNiveau;
-//            this.inscriptions.addNiveau(this);
-//         }
-//      }
-//   }
-//   /** @pdGenerated default parent getter */
-//   public Etudiant getEtudiant() {
-//      return etudiant;
-//   }
-//   
-//   /** @pdGenerated default parent setter
-//     * @param newEtudiant */
-//   public void setEtudiant(Etudiant newEtudiant) {
-//      if (this.etudiant == null || !this.etudiant.equals(newEtudiant))
-//      {
-//         if (this.etudiant != null)
-//         {
-//            Etudiant oldEtudiant = this.etudiant;
-//            this.etudiant = null;
-//            oldEtudiant.removeInscriptions(this);
-//         }
-//         if (newEtudiant != null)
-//         {
-//            this.etudiant = newEtudiant;
-//            this.etudiant.addInscriptions(this);
-//         }
-//      }
-//   }
-//   /** @pdGenerated default getter */
-//   public java.util.Collection<Absence> getAbsences() {
-//      if (absences == null)
-//         absences = new java.util.HashSet<Absence>();
-//      return absences;
-//   }
-//   
-//   /** @pdGenerated default iterator getter */
-//   public java.util.Iterator getIteratorAbsences() {
-//      if (absences == null)
-//         absences = new java.util.HashSet<Absence>();
-//      return absences.iterator();
-//   }
-//   
-//   /** @pdGenerated default setter
-//     * @param newAbsences */
-//   public void setAbsences(java.util.Collection<Absence> newAbsences) {
-//      removeAllAbsences();
-//      for (java.util.Iterator iter = newAbsences.iterator(); iter.hasNext();)
-//         addAbsences((Absence)iter.next());
-//   }
-//   
-//   /** @pdGenerated default add
-//     * @param newAbsence */
-//   public void addAbsences(Absence newAbsence) {
-//      if (newAbsence == null)
-//         return;
-//      if (this.absences == null)
-//         this.absences = new java.util.HashSet<Absence>();
-//      if (!this.absences.contains(newAbsence))
-//      {
-//         this.absences.add(newAbsence);
-//         newAbsence.setInscription(this);      
-//      }
-//   }
-//   
-//   /** @pdGenerated default remove
-//     * @param oldAbsence */
-//   public void removeAbsences(Absence oldAbsence) {
-//      if (oldAbsence == null)
-//         return;
-//      if (this.absences != null)
-//         if (this.absences.contains(oldAbsence))
-//         {
-//            this.absences.remove(oldAbsence);
-//            oldAbsence.setInscription((Inscription)null);
-//         }
-//   }
-//   
-//   /** @pdGenerated default removeAll */
-//   public void removeAllAbsences() {
-//      if (absences != null)
-//      {
-//         Absence oldAbsence;
-//         for (java.util.Iterator iter = getIteratorAbsences(); iter.hasNext();)
-//         {
-//            oldAbsence = (Absence)iter.next();
-//            iter.remove();
-//            oldAbsence.setInscription((Inscription)null);
-//         }
-//      }
-//   }
+	private int etat;
 
+	@ManyToOne
+	@JoinColumn(name="idNiveau")
+	private Niveau niveau;
+
+	@ManyToOne
+	@JoinColumn(name="idEtudiant")
+	private Etudiant etudiant;
+	
+	@OneToMany(mappedBy = "inscription" , cascade = CascadeType.ALL , targetEntity = Absence.class)
+	private Set<Absence> absences;
+
+	public Long getIdInscription() {
+		return idInscription;
+	}
+
+	public void setIdInscription(Long idInscription) {
+		this.idInscription = idInscription;
+	}
+
+	public int getAnnee() {
+		return annee;
+	}
+
+	public void setAnnee(int annee) {
+		this.annee = annee;
+	}
+
+	public int getEtat() {
+		return etat;
+	}
+
+	public void setEtat(int etat) {
+		this.etat = etat;
+	}
+
+	public Niveau getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
+	}
+
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
+
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public Set<Absence> getAbsences() {
+		return absences;
+	}
+
+	public void setAbsences(Set<Absence> absences) {
+		this.absences = absences;
+	}
+
+	
+	
 }

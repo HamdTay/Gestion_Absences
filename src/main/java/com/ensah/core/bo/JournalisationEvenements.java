@@ -1,5 +1,6 @@
 package com.ensah.core.bo;
 
+
 import java.util.*;
 
 import javax.persistence.Entity;
@@ -11,43 +12,80 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class JournalisationEvenements {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idEvenement;
-    private String details;
-    private String adresseIP;
-    private java.util.Date DateHeure;
-    private String typeEvenement;
-    private String criticite;
-   
-   /** @pdRoleInfo migr=no name=Compte assc=Association_19 coll=java.util.Collection impl=java.util.HashSet mult=1..1 side=A */
-    @ManyToOne
-    @JoinColumn(name="idCompte")
-    public Compte compte;
-   
-   
-   /** @pdGenerated default parent getter */
-   public Compte getCompte() {
-      return compte;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newCompte */
-   public void setCompte(Compte newCompte) {
-      if (this.compte == null || !this.compte.equals(newCompte))
-      {
-         if (this.compte != null)
-         {
-            Compte oldCompte = this.compte;
-            this.compte = null;
-            oldCompte.removeEvenements(this);
-         }
-         if (newCompte != null)
-         {
-            this.compte = newCompte;
-            this.compte.addEvenements(this);
-         }
-      }
-   }
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idEvenement;
+
+	private String details;
+
+	private String adresseIP;
+
+	private Date DateHeure;
+
+	private String typeEvenement;
+
+	private String criticite;
+
+	@ManyToOne
+	@JoinColumn(name= "idCompte")
+	private Compte compte;
+
+	public Long getIdEvenement() {
+		return idEvenement;
+	}
+
+	public void setIdEvenement(Long idEvenement) {
+		this.idEvenement = idEvenement;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public String getAdresseIP() {
+		return adresseIP;
+	}
+
+	public void setAdresseIP(String adresseIP) {
+		this.adresseIP = adresseIP;
+	}
+
+	public Date getDateHeure() {
+		return DateHeure;
+	}
+
+	public void setDateHeure(Date dateHeure) {
+		DateHeure = dateHeure;
+	}
+
+	public String getTypeEvenement() {
+		return typeEvenement;
+	}
+
+	public void setTypeEvenement(String typeEvenement) {
+		this.typeEvenement = typeEvenement;
+	}
+
+	public String getCriticite() {
+		return criticite;
+	}
+
+	public void setCriticite(String criticite) {
+		this.criticite = criticite;
+	}
+
+	public Compte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(Compte compte) {
+		this.compte = compte;
+	}
+
+	
 }

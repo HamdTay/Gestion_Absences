@@ -1,10 +1,11 @@
 package com.ensah.core.bo;
 
-import java.util.*;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name="idCardreAdmin")
 public class CadreAdministrateur extends Utilisateur {
 
    private String grade;
@@ -17,4 +18,6 @@ public void setGrade(String grade) {
 	this.grade = grade;
 }
 
+   
+   
 }

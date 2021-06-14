@@ -1,6 +1,6 @@
 package com.ensah.core.bo;
 
-import java.util.*;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,11 +11,26 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Matiere {
-   public int getIdMatiere() {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idMatiere;
+
+	private String nom;
+
+	private String code;
+
+	@ManyToOne
+	@JoinColumn(name="idModule")
+	private Module module;
+	
+	
+
+	public Long getIdMatiere() {
 		return idMatiere;
 	}
 
-	public void setIdMatiere(int idMatiere) {
+	public void setIdMatiere(Long idMatiere) {
 		this.idMatiere = idMatiere;
 	}
 
@@ -35,41 +50,14 @@ public class Matiere {
 		this.code = code;
 	}
 
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   private int idMatiere;
+	public Module getModule() {
+		return module;
+	}
 
-   private String nom;
-
-   private String code;
-   
-   @ManyToOne
-   @JoinColumn(name="idModule")
-   public Module module;
-   
-   
-   /** @pdGenerated default parent getter */
-   public Module getModule() {
-      return module;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newModule */
-   public void setModule(Module newModule) {
-      if (this.module == null || !this.module.equals(newModule))
-      {
-         if (this.module != null)
-         {
-            Module oldModule = this.module;
-            this.module = null;
-            oldModule.removeMatieres(this);
-         }
-         if (newModule != null)
-         {
-            this.module = newModule;
-            this.module.addMatieres(this);
-         }
-      }
-   }
+	public void setModule(Module module) {
+		this.module = module;
+	}
+	
+	
 
 }

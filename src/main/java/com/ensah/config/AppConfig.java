@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -69,7 +71,7 @@ public class AppConfig implements WebMvcConfigurer {
 		//for jsp standard library
 		bean.setViewClass(JstlView.class);
 		
-		bean.setPrefix("/WEB-INF/view/");
+		bean.setPrefix("/WEB-INF/views/");
 		bean.setSuffix(".jsp");
 		return bean;
 	}
@@ -80,9 +82,11 @@ public class AppConfig implements WebMvcConfigurer {
 	public HibernateTemplate hibernateTemplate(final SessionFactory sessionFactory) {
 		//creation de hibernate bean
 		HibernateTemplate hibernateTemplate = new HibernateTemplate();
-
 		//injection de session factory
 		hibernateTemplate.setSessionFactory(sessionFactory);
+		
+		hibernateTemplate.setCheckWriteOperations(false);
+		
 		
 		if(hibernateTemplate != null) {
 			LOGGER.debug(" HibernateTemplate created ...");
@@ -146,6 +150,8 @@ public class AppConfig implements WebMvcConfigurer {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 	
+	@Bean
+	@Autowired
 	public PlatformTransactionManager transactionManager(final SessionFactory sessionFactory) {
 
 		// Création du gestionnaire de transaction de Hibernate
@@ -176,7 +182,16 @@ public class AppConfig implements WebMvcConfigurer {
 	    OpenSessionInViewInterceptor openSessionInViewInterceptor = new OpenSessionInViewInterceptor();
 	    openSessionInViewInterceptor.setSessionFactory(sessionFactory().getObject());
 
-	    registry.addWebRequestInterceptor(openSessionInViewInterceptor).addPathPatterns("/*");
+	    registry.addWebRequestInterceptor(openSessionInViewInterceptor).addPathPatterns("/**").order(Ordered.HIGHEST_PRECEDENCE);
 	}
+	
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+          .addResourceHandler("/resources/**")
+          .addResourceLocations("/resources/");	
+    }
+	
+	
 	
 }

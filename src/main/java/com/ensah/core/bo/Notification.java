@@ -9,50 +9,84 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+
 @Entity
 public class Notification {
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)   
-   private int idNotification;
 
-   private String type;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idNotification;
 
-   private String titre;
+	private String type;
 
-   private String texte;
+	private String titre;
 
-   private java.util.Date dateCreation;
+	private String texte;
 
-   private int etat;
-   
-   /** @pdRoleInfo migr=no name=Compte assc=Association_10 coll=java.util.Collection impl=java.util.HashSet mult=1..1 side=A */
-   @ManyToOne
-   @JoinColumn(name="compte_id")
-   public Compte compte;
-   
-   
-   /** @pdGenerated default parent getter */
-   public Compte getCompte() {
-      return compte;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newCompte */
-   public void setCompte(Compte newCompte) {
-      if (this.compte == null || !this.compte.equals(newCompte))
-      {
-         if (this.compte != null)
-         {
-            Compte oldCompte = this.compte;
-            this.compte = null;
-            oldCompte.removeNotifications(this);
-         }
-         if (newCompte != null)
-         {
-            this.compte = newCompte;
-            this.compte.addNotifications(this);
-         }
-      }
-   }
+	private Date dateCreation;
+
+	private int etat;
+
+	@ManyToOne
+	@JoinColumn(name="idCompte")
+	private Compte compte;
+
+	public Long getIdNotification() {
+		return idNotification;
+	}
+
+	public void setIdNotification(Long idNotification) {
+		this.idNotification = idNotification;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getTexte() {
+		return texte;
+	}
+
+	public void setTexte(String texte) {
+		this.texte = texte;
+	}
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public int getEtat() {
+		return etat;
+	}
+
+	public void setEtat(int etat) {
+		this.etat = etat;
+	}
+
+	public Compte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(Compte compte) {
+		this.compte = compte;
+	}
+	
+	
 
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ensah.core.bo.Compte;
-import com.ensah.core.bo.ComptePrincipal;
+import com.ensah.core.bo.UserPrincipal;
 import com.ensah.core.dao.ICompteDao;
 
 //import com.ensah.core.bo.UserPrincipal;
@@ -65,7 +65,7 @@ public class CustomAuthentificationService implements UserDetailsService {
 		
 		//Embaler l'objet de type UserAccount dans un objet de type UserPrincipal qui lui même
 		// implémente UserDetails 
-		return new ComptePrincipal(user);
+		return new UserPrincipal(user);
 	}
 
 }
