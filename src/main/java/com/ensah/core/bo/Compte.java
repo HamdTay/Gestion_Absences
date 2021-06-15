@@ -1,8 +1,9 @@
 package com.ensah.core.bo;
 
 
-import java.util.*;
 
+import java.util.*;
+import com.ensah.core.bo.Utilisateur;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -126,13 +127,6 @@ public class Compte {
 		this.password = password;
 	}
 
-	public List<Message> getMessagesRecus() {
-		return messagesRecus;
-	}
-
-	public void setMessagesRecus(List<Message> messagesRecus) {
-		this.messagesRecus = messagesRecus;
-	}
 
 	public boolean isDisconnectAccount() {
 		return disconnectAccount;
@@ -190,7 +184,13 @@ public class Compte {
 		this.messagesEnvoyes = messagesEnvoyes;
 	}
 
+	public List<Message> getmessagesRecus() {
+		return messagesRecus;
+	}
 
+	public void setmessagesRecus(List<Message> messagesRecus) {
+		this.messagesRecus = messagesRecus;
+	}
 
 	public List<Conversation> getConversationsCrees() {
 		return conversationsCrees;
@@ -212,8 +212,21 @@ public class Compte {
 		return proprietaire;
 	}
 
-	public void setProprietaire(Utilisateur proprietaire) {
-		this.proprietaire = proprietaire;
+	public void setProprietaire(Utilisateur newUtilisateur) {
+	      if (this.proprietaire == null || !this.proprietaire.equals(newUtilisateur))
+	      {
+	         if (this.proprietaire != null)
+	         {
+	            Utilisateur oldUtilisateur = this.proprietaire;
+	            this.proprietaire = null;
+	            oldUtilisateur.removeComptes(this);
+	         }
+	         if (newUtilisateur != null)
+	         {
+	            this.proprietaire = newUtilisateur;
+	            this.proprietaire.addComptes(this);
+	         }
+	      }
 	}
 
 	public List<Conversation> getConversationReçues() {

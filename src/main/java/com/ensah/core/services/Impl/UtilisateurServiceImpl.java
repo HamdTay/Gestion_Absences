@@ -2,6 +2,8 @@ package com.ensah.core.services.Impl;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -65,6 +67,10 @@ public class UtilisateurServiceImpl  implements IUtilisateurService{
 
 	@Override
 	public void deletePerson(Long id) {
+		
+		if(!userDao.exists(id)){
+			throw new EntityNotFoundException("L'id "+id+" de l'utilisateur ,n'est pas trouvé.");	
+		}
 		userDao.delete(id);
 	}
 

@@ -7,6 +7,8 @@ import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ensah.core.bo.Compte;
 import com.ensah.core.bo.Role;
@@ -15,7 +17,8 @@ import com.ensah.core.dao.ICompteDao;
 import com.ensah.core.dao.IRoleDao;
 import com.ensah.core.dao.IUtilisateurDao;
 import com.ensah.core.services.ICompteService;
-
+@Service
+@Transactional
 public class CompteServiceImpl implements  ICompteService{
 	
 	@Autowired
@@ -42,7 +45,7 @@ public class CompteServiceImpl implements  ICompteService{
 	@Override
 	public List<Compte> getAllAccounts() {
 		// TODO Auto-generated method stub
-		return null;
+		return accountDao.getAll();
 	}
 
 	@Override
@@ -61,7 +64,11 @@ public class CompteServiceImpl implements  ICompteService{
 		
 		account.setRole(roleDao.findById(idRole));
 		
-		account.setPassword(passwordEncoder.encode(generatePassayPassword()));
+		String pass = generatePassayPassword();
+		
+		String password = passwordEncoder.encode(pass);
+		
+		account.setPassword(password);
 		
 		//set login, if two users have the same login increment until I say so
 		String login = user.getPrenom()+user.getNom();
@@ -82,7 +89,7 @@ public class CompteServiceImpl implements  ICompteService{
 		
 		
 		
-		return null;
+		return pass;
 	}
 
 	@Override

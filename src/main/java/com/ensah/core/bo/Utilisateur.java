@@ -2,6 +2,8 @@ package com.ensah.core.bo;
 
 /***********************************************************************
 
+ /***********************************************************************
+
  * Module:  Utilisateur.java
  * Author:  Hp
  * Purpose: Defines the Class Utilisateur
@@ -32,9 +34,9 @@ public class Utilisateur {
 	private String nom;
 
 	private String prenom;
-	@Column(unique=true)
+    @Column(unique=true)
 	private String cin;
-	@Column(unique=true)
+    @Column(unique=true)
 	private String email;
 
 	private String telephone;
@@ -134,6 +136,31 @@ public class Utilisateur {
 				+ ", email=" + email + ", telephone=" + telephone + ", nomArabe=" + nomArabe + ", prenomArabe="
 				+ prenomArabe + ", photo=" + photo + ", comptes=" + comptes + "]";
 	}
+	
+	   public void addComptes(Compte newCompte) {
+		      if (newCompte == null)
+		         return;
+		      if (this.comptes == null)
+		         this.comptes = new java.util.HashSet<Compte>();
+		      if (!this.comptes.contains(newCompte))
+		      {
+		         this.comptes.add(newCompte);
+		         newCompte.setProprietaire(this);      
+		      }
+		   }
+		   
+		   /** @pdGenerated default remove
+		     * @param oldCompte */
+		   public void removeComptes(Compte oldCompte) {
+		      if (oldCompte == null)
+		         return;
+		      if (this.comptes != null)
+		         if (this.comptes.contains(oldCompte))
+		         {
+		            this.comptes.remove(oldCompte);
+		            oldCompte.setProprietaire((Utilisateur)null);
+		         }
+		   }
 	
 	
 
