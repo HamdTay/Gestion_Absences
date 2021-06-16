@@ -1,8 +1,8 @@
 package com.ensah.core.bo;
 
+import java.util.*;
 
-
-import javax.persistence.Entity;
+import javax.persistence.Entity; 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,44 +11,43 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Matiere {
+ 
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   private Long idMatiere;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idMatiere;
+   private String nom;
 
-	private String nom;
+   private String code;
+   
+   @ManyToOne
+   @JoinColumn(name="idModule")
+   public Module module;
+   
+ 
+   public Long getIdMatiere() {
+ 		return idMatiere;
+ 	}
 
-	private String code;
+ 	public void setIdMatiere(Long idMatiere) {
+ 		this.idMatiere = idMatiere;
+ 	}
 
-	@ManyToOne
-	@JoinColumn(name="idModule")
-	private Module module;
-	
-	
+ 	public String getNom() {
+ 		return nom;
+ 	}
 
-	public Long getIdMatiere() {
-		return idMatiere;
-	}
+ 	public void setNom(String nom) {
+ 		this.nom = nom;
+ 	}
 
-	public void setIdMatiere(Long idMatiere) {
-		this.idMatiere = idMatiere;
-	}
+ 	public String getCode() {
+ 		return code;
+ 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
+ 	public void setCode(String code) {
+ 		this.code = code;
+ 	}
 
 	public Module getModule() {
 		return module;
@@ -57,7 +56,6 @@ public class Matiere {
 	public void setModule(Module module) {
 		this.module = module;
 	}
-	
-	
+
 
 }

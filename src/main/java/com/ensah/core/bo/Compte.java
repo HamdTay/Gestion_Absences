@@ -6,6 +6,7 @@ import java.util.*;
 import com.ensah.core.bo.Utilisateur;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,7 +60,7 @@ public class Compte {
 	@OneToMany(mappedBy = "createurConversation", cascade = CascadeType.ALL, targetEntity=Conversation.class)
 	private List<Conversation> conversationsCrees;
 
-	@OneToMany(mappedBy = "compte", cascade = CascadeType.ALL, targetEntity=JournalisationEvenements.class)
+	@OneToMany(mappedBy = "compte", cascade = CascadeType.ALL, targetEntity=JournalisationEvenements.class,  fetch=FetchType.LAZY)
 	private List<JournalisationEvenements> evenements;
 
 	@ManyToOne
@@ -164,10 +165,22 @@ public class Compte {
 		return role;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
+   public void setRole(Role newRole) {
+	      if (this.role == null || !this.role.equals(newRole))
+	      {
+	         if (this.role != null)
+	         {
+	            Role oldRole = this.role;
+	            this.role = null;
+	            oldRole.removeComptes(this);
+	         }
+	         if (newRole != null)
+	         {
+	            this.role = newRole;
+	            this.role.addComptes(this);
+	         }
+	      }
+	   }
 	public List<Notification> getNotifications() {
 		return notifications;
 	}

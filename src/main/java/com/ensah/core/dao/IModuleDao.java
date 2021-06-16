@@ -1,4 +1,4 @@
-package com.ensah.core.dao;
+ package com.ensah.core.dao;
 
 import com.ensah.core.bo.Module;
 import com.ensah.genericdao.GenericDao;

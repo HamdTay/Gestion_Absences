@@ -18,7 +18,16 @@ public interface ICompteService {
 	
 	public void deleteAccount();
 	
-	public void updateAccount();
+	public void updateAccount(String Login, String Password, Long roleId, Long idCompte);
 	
+	public void changePassword(Long id, String password);
+	
+	public String resetPassword(Long id);
+	
+	public void activate(String username);
+	
+	public void deactivate(String username);
+
+
 	//public ExcelExporter prepareCompteExport(List<Compte> comptes) ;
 }

@@ -1,10 +1,11 @@
 package com.ensah.core.bo;
 
-
 import java.util.*;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,23 +14,53 @@ import javax.persistence.OneToMany;
 @Entity
 public class Filiere {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idFiliere;
+   public Filiere() {
+		super();
+	}
 
-	private String titreFiliere;
+   public Filiere(String titreFiliere, String codeFiliere, int anneeaccreditation, int anneeFinaccreditation) {
+		super();
+		
+		this.titreFiliere = titreFiliere;
+		this.codeFiliere = codeFiliere;
+		this.anneeaccreditation = anneeaccreditation;
+		this.anneeFinaccreditation = anneeFinaccreditation;
+	}
 
-	private String codeFiliere;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY) 
+   private Long idFiliere;
 
-	private int anneeaccreditation;
+   private String titreFiliere;
+   
+   @Column(unique = true)
+   private String codeFiliere;
 
-	private int anneeFinaccreditation;
+   private int anneeaccreditation;
+   private int anneeFinaccreditation;
 
-	@OneToMany(mappedBy = "filiere" ,  cascade = CascadeType.ALL, targetEntity = Niveau.class)
-	private Set<Niveau> niveaux;
-	
-	@OneToMany(  cascade = CascadeType.ALL, targetEntity = Coordination.class)
-	public Set<Coordination> periodeCoordination;
+   @OneToMany(mappedBy="filiere", cascade=CascadeType.ALL)
+   public java.util.Collection<Niveau> niveaux;
+
+   @OneToMany(mappedBy="filiere",fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+   public java.util.Collection<Coordination> periodeCoordination=new LinkedHashSet<Coordination>();
+   
+
+	public java.util.Collection<Niveau> getNiveaux() {
+	return niveaux;
+}
+
+public void setNiveaux(java.util.Collection<Niveau> niveaux) {
+	this.niveaux = niveaux;
+}
+
+public java.util.Collection<Coordination> getPeriodeCoordination() {
+	return periodeCoordination;
+}
+
+public void setPeriodeCoordination(java.util.Collection<Coordination> periodeCoordination) {
+	this.periodeCoordination = periodeCoordination;
+}
 
 	public Long getIdFiliere() {
 		return idFiliere;
@@ -71,22 +102,6 @@ public class Filiere {
 		this.anneeFinaccreditation = anneeFinaccreditation;
 	}
 
-	public Set<Niveau> getNiveaux() {
-		return niveaux;
-	}
 
-	public void setNiveaux(Set<Niveau> niveaux) {
-		this.niveaux = niveaux;
-	}
 
-	public Set<Coordination> getPeriodeCoordination() {
-		return periodeCoordination;
-	}
-
-	public void setPeriodeCoordination(Set<Coordination> periodeCoordination) {
-		this.periodeCoordination = periodeCoordination;
-	}
-
-	
-	
 }

@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.ensah.core.dao.Impl.CustomAuthentificationService;
@@ -60,6 +61,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter { // Il faut
 
 		auth.userDetailsService(userService);
 
+	}
+	
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new CustomAuthenticationFailureHandler();
 	}
 
 	// Configuration de l'algorithme de hashage des mots de passe

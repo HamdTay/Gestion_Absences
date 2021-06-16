@@ -4,6 +4,7 @@ package com.ensah.core.bo;
 import java.util.*;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class JournalisationEvenements {
 
 	private String criticite;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name= "idCompte")
 	private Compte compte;
 

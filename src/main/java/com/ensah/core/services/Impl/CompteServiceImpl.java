@@ -99,8 +99,18 @@ public class CompteServiceImpl implements  ICompteService{
 	}
 
 	@Override
-	public void updateAccount() {
-		// TODO Auto-generated method stub
+	public void updateAccount(String Login, String Password, Long roleId, Long idCompte) {
+		
+		Compte account = accountDao.findById(idCompte);
+		account.setLogin(Login);
+		if(Password != null && !Password.equals("")) {
+			account.setPassword(passwordEncoder.encode(Password));
+		}
+		
+		Role role = roleDao.findById(roleId);
+		account.setRole(role);
+		
+
 		
 	}
 	
@@ -114,6 +124,40 @@ public class CompteServiceImpl implements  ICompteService{
 
 		return password;
 	}
+	@Override
+	public void changePassword(Long id, String Password) {
+		Compte acc = accountDao.findById(id);
+		
+		acc.setPassword(passwordEncoder.encode(Password));
+		
+	}
+	
+	@Override
+	public String resetPassword(Long id) {
+		Compte acc = accountDao.findById(id);
+		String Password = generatePassayPassword();
+		acc.setPassword(passwordEncoder.encode(Password));
+		
+		return Password;
+		
+	}
+
+	@Override
+	public void activate(String username) {
+		Compte acc = accountDao.findByUserName(username);
+		if(!acc.isEnabled()) {
+			acc.setEnabled(true);
+		}
+	}
+
+	@Override
+	public void deactivate(String username) {
+		Compte acc = accountDao.findByUserName(username);
+		if(acc.isEnabled()) {
+			acc.setEnabled(false);
+		}
+	}
+	
 	
 	
 	

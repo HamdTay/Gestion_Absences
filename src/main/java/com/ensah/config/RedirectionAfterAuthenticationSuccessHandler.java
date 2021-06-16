@@ -11,12 +11,15 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.ensah.core.services.IJournalisationEvenementsService;
 
 /**
  * Cette classe permet de personnaliser la redirection après l'authntification
@@ -31,15 +34,19 @@ public class RedirectionAfterAuthenticationSuccessHandler implements Authenticat
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+	//Logger table
+	@Autowired
+	IJournalisationEvenementsService logSer;
+	
 	public RedirectionAfterAuthenticationSuccessHandler() {
 		super();
 	}
 
 
-
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response,
 			final Authentication authentication) throws IOException {
+		logSer.addLog(authentication.getName(), request.getRemoteAddr(), "Login", "TRACE", authentication.getName()+" a conneté.");
 		handle(request, response, authentication);
 		clearAuthenticationAttributes(request);
 	}
@@ -63,8 +70,9 @@ public class RedirectionAfterAuthenticationSuccessHandler implements Authenticat
 		Map<String, String> roleTargetUrlMap = new HashMap<>();
 
 		//TODO : A personnaliser selon votre cas
-		roleTargetUrlMap.put("ROLE_USER", "/user/showUserHome"); //L'utilisateur de type USER sera rediriger vers "/user/showUserHome" 
+		roleTargetUrlMap.put("ROLE_ETUDIANT", "/etud/showUserHome"); //L'utilisateur de type USER sera rediriger vers "/user/showUserHome" 
 		roleTargetUrlMap.put("ROLE_ADMIN", "/admin/showAdminHome"); //L'utilisateur de type USER sera rediriger vers "/admin/showAdminHome" 
+		roleTargetUrlMap.put("ROLE_PROF", "/prof/showProfHome"); //L'utilisateur de type USER sera rediriger vers "/admin/showAdminHome" 
 
 		
 		//Vous pouvez laisser ce code sans changement
