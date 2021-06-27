@@ -90,7 +90,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter { // Il faut
 		.antMatchers("/admin/**").hasRole("ADMIN")//Le role ADMIN accèdent aux requete commençant par /admin/
 		//TODO : Vous pouvez ajouter les configurations nécessaires si vous avez d'autres rôles
 		.and()
-		.formLogin().loginPage("/showMyLoginPage")  // Indiquer le mapping affichant la page de login Form
+		.formLogin().loginPage("/login")  // Indiquer le mapping affichant la page de login Form
 		.loginProcessingUrl("/authenticateTheUser") // Meme valeur à mettre dans l'attribut action dans le form
 															// de login. Ceci redirigera au bon filtre spring qui
 															// s'occupe de l'authentification
@@ -101,6 +101,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter { // Il faut
 		.and()
 		.exceptionHandling().accessDeniedPage("/access-denied") // Indiquer le mapping que Spring utilisera pour
 																		// rediriger à la page d'accès non autorisé
+		.and()
+        .rememberMe().key("uniqueAndSecret")
 		;
 
 	}

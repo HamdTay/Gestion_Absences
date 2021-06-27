@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ensah.core.bo.CadreAdministrateur;
+import com.ensah.core.bo.Enseignant;
 import com.ensah.core.bo.Etudiant;
 import com.ensah.core.bo.Utilisateur;
 import com.ensah.core.dao.IUtilisateurDao;
@@ -56,7 +58,81 @@ public class UtilisateurServiceImpl  implements IUtilisateurService{
 
 	@Override
 	public void updatePerson(Utilisateur pPerson, int role) {
-		userDao.update(pPerson);
+		List<Utilisateur> pl = (List<Utilisateur>)userDao.getEntityByColValue("Utilisateur", "email", pPerson.getEmail());
+		Utilisateur p = new Utilisateur();
+		p.setCin("");
+		Long id = null;
+		if(pl != null && pl.size() > 0) {
+			p = pl.get(0);
+			id = p.getIdUtilisateur();
+		}
+		
+		
+		
+		Utilisateur p1 = p;
+		Long id1 = null;
+		if(!p.getCin().equals(pPerson.getCin())) {
+			List<Utilisateur> pl1 = (List<Utilisateur>)userDao.getEntityByColValue("Utilisateur", "cin", pPerson.getCin());			
+			if(pl != null && pl.size() > 0) {
+				p1 = pl1.get(0);
+				id1 = p1.getIdUtilisateur();
+			}
+			System.out.println("inside ser cin ");
+		}
+				
+		
+		if(!userDao.checkIfEmailIsUnique(pPerson.getEmail())
+			&& id != pPerson.getIdUtilisateur() && id != null) {
+			throw new EntityNotUnique(pPerson.getClass(), "email");
+		}
+		
+		//si cne n'est pas unique
+		if(!userDao.checkIfCINIsUnique(pPerson.getCin())
+				&& id1 != pPerson.getIdUtilisateur() && id1 != null) {
+			System.err.println("inside service add person chek cin is unique");
+			throw new EntityNotUnique(Utilisateur.class, "cin");
+		}
+		
+		//si une etudiant a entréé un cne déja dans la base de donnée
+		if(role == 3 && pPerson instanceof Etudiant) {
+			Etudiant etud = (Etudiant)pPerson;
+			
+			List<Utilisateur>p2 = userDao.getEntityByColValue("Etudiant", "cne", etud.getCne());
+			
+			Long id2 = null;
+			if(p2 != null && p2.size() > 0) {
+				id2 = p2.get(0).getIdUtilisateur();
+			}
+			
+			
+			if(!userDao.checkIfCNEIsUnique(etud.getCne())
+				&& id2 != etud.getIdUtilisateur() && id2 != null) {
+				throw new EntityNotUnique(Etudiant.class, "cne");
+			}
+		}
+		System.out.println("inside ser cin ");
+		
+		if(p.getCin().equals("")) {
+			p =userDao.findById(pPerson.getIdUtilisateur());
+		}
+		
+		p.setCin(pPerson.getCin());
+		p.setEmail(pPerson.getEmail());
+		p.setNom(pPerson.getNom());
+		p.setNomArabe(pPerson.getNomArabe());
+		p.setPrenom(pPerson.getPrenom());
+		p.setPrenomArabe(pPerson.getPrenomArabe());
+		p.setTelephone(pPerson.getTelephone());
+		if(pPerson instanceof Etudiant ) {
+			((Etudiant)p).setCne(((Etudiant)pPerson).getCne());
+		}else if(pPerson instanceof CadreAdministrateur) {
+			((CadreAdministrateur)p).setGrade(((CadreAdministrateur)pPerson).getGrade());			
+		}else if(pPerson instanceof Enseignant) {
+			((Enseignant)p).setSpecialite(((Enseignant)pPerson).getSpecialite());
+		}
+		
+		
+		//userDao.update(pPerson);
 		
 	}
 
