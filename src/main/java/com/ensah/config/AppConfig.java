@@ -17,6 +17,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewInterceptor;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.ensah.core.bo.Absence;
+import com.ensah.core.bo.BlockIP;
 import com.ensah.core.bo.CadreAdministrateur;
 import com.ensah.core.bo.Compte;
 import com.ensah.core.bo.Conversation;
@@ -105,7 +107,7 @@ public class AppConfig implements WebMvcConfigurer {
 				Compte.class, Conversation.class, Coordination.class, Enseignant.class,
 				Etudiant.class, Filiere.class, Inscription.class, JournalisationEvenements.class
 				, Matiere.class, Message.class, Module.class, Niveau.class, Notification.class,
-				PieceJustificative.class, Role.class, TypeSeance.class, Utilisateur.class);
+				PieceJustificative.class, Role.class, TypeSeance.class, Utilisateur.class, BlockIP.class);
 
 		if (sessionFactory != null) {
 			LOGGER.debug(" sessionFactory created ...");

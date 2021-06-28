@@ -93,7 +93,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter { // Il faut
 		.formLogin().loginPage("/login")  // Indiquer le mapping affichant la page de login Form
 		.loginProcessingUrl("/authenticateTheUser") // Meme valeur à mettre dans l'attribut action dans le form
 															// de login. Ceci redirigera au bon filtre spring qui
-															// s'occupe de l'authentification
+		.failureHandler(authenticationFailureHandler())													// s'occupe de l'authentification
 		.successHandler(authSuccessHandler)
 		.and().logout() //Configurer le logout 
 //		.logoutUrl("/perform_logout")   //Nous avons utiliser la valeur par défaut qui est /logout

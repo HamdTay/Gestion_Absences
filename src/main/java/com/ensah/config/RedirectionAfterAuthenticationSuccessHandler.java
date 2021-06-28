@@ -19,6 +19,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.ensah.core.services.IBlockIPService;
 import com.ensah.core.services.IJournalisationEvenementsService;
 
 /**
@@ -38,17 +39,23 @@ public class RedirectionAfterAuthenticationSuccessHandler implements Authenticat
 	@Autowired
 	IJournalisationEvenementsService logSer;
 	
+	@Autowired
+	IBlockIPService bipser;
+	
 	public RedirectionAfterAuthenticationSuccessHandler() {
 		super();
 	}
-
-
+	
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response,
 			final Authentication authentication) throws IOException {
 		logSer.addLog(authentication.getName(), request.getRemoteAddr(), "Login", "TRACE", authentication.getName()+" a conneté.");
+		
+		bipser.reset(request);
 		handle(request, response, authentication);
 		clearAuthenticationAttributes(request);
+	
+		
 	}
 
 
